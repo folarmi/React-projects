@@ -1,35 +1,45 @@
 import React, { useState } from "react";
-
+import Data from "./Data";
 const Lorem = () => {
-  const [paragraph, setParagraphs] = useState("0");
-  const [lorem, setLorem] = useState("");
-  const word =
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique consequuntur obcaecati a animi ducimus placeat magnam vero eos numquam maiores?";
+  const [paragraph, setParagraphs] = useState([]);
+  const [index, setIndex] = useState(0);
 
   const getNumber = (e) => {
     e.preventDefault();
-    console.log(paragraph);
-    setLorem(word.repeat(paragraph));
-    // string.repeat([count]);
+    let amount = parseInt(index);
+    if (index <= 0) {
+      amount = 1;
+    }
+    if (index > 8) {
+      amount = 8;
+    }
+    setParagraphs(Data.slice(0, amount));
   };
   return (
-    <div className="main">
+    <section className="main">
       <h2>Tired of Boring Lorem Ipsum?</h2>
-      <form action="" method="get">
+      <form>
         <label htmlFor="paragraph">Paragraphs:</label>
         <input
           type="number"
-          name=""
-          id=""
-          value={paragraph}
-          onChange={(e) => setParagraphs(e.target.value)}
+          value={index}
+          onChange={(e) => setIndex(e.target.value)}
         />
-        <button onClick={getNumber}>Generate</button>
-        <div className="text">
-          <p>{lorem}</p>
-        </div>
+        <button onClick={getNumber} type="submit">
+          Generate
+        </button>
+        <article className="text">
+          {/* <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae
+            cumque possimus harum id officiis maxime adipisci ullam impedit
+            culpa nobis?
+          </p> */}
+          {paragraph.map((onePara, index) => {
+            return <p key={index}>{onePara}</p>;
+          })}
+        </article>
       </form>
-    </div>
+    </section>
   );
 };
 
